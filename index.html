@@ -41,6 +41,9 @@
             /* Dramatic "slide" behaviour */
             overflow-y: auto;
             scroll-snap-type: y mandatory;
+
+            /* Make room for fixed header */
+            padding-top: 4.3rem;
         }
 
         a {
@@ -184,8 +187,10 @@
         /* Header and navigation */
 
         .site-header {
-            position: sticky;
+            position: fixed;      /* changed from sticky */
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 200;
             backdrop-filter: blur(16px);
             background: linear-gradient(to bottom, rgba(2, 6, 23, 0.96), rgba(2, 6, 23, 0.9));
@@ -917,7 +922,6 @@
 
     // IntersectionObserver for dramatic section reveal
     const surfaces = document.querySelectorAll('.section-surface');
-    const sections = document.querySelectorAll('main section[id]');
 
     function setActiveSection(id) {
         // highlight nav
