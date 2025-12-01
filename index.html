@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>North Shore Zen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="North Shore Zen is a Soto Zen practice community offering regular zazen, retreats, and study on the North Shore.">
+
+    <!-- Inline CSS: all styles in one file -->
+    <style>
+        /* Basic reset and base styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Source Sans Pro", sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #1f1f1f;
+            background-color: #f9fafb;
+        }
+
+        /* Layout helpers */
+        .section {
+            padding: 4rem 1.5rem;
+        }
+        .section-alt {
+            background-color: #ffffff;
+        }
+        .section-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 2.5rem;
+        }
+        @media (max-width: 800px) {
+            .two-column {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 300;
+            margin: 0 0 0.6em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.6rem; }
+        h3 { font-size: 1.2rem; }
+        p { margin: 0 0 1.1em; }
+        .muted {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* Header and navigation */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .site-header-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo img {
+            height: 72px;
+            width: auto;
+            display: block;
+        }
+        .title-group {
+            flex: 1;
+        }
+        .site-title {
+            margin: 0;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+        }
+        .site-subtitle {
+            margin: 0.2rem 0 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #6b7280;
+        }
+
+        /* Navigation */
+        .site-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .site-nav a {
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #374151;
+            padding-bottom: 0.2rem;
+            border-bottom: 1px solid transparent;
+        }
+        .site-nav a:hover,
+        .site-nav a:focus-visible {
+            border-bottom-color: #f97316;
+            color: #111827;
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0.25rem;
+            margin-left: auto;
+            cursor: pointer;
+        }
+        .nav-toggle-bar {
+            width: 22px;
+            height: 2px;
+            background-color: #111827;
+            display: block;
+            margin: 4px 0;
+        }
+        .nav-toggle-label {
+            position: absolute;
+            left: -9999px;
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 5rem;
+            background: radial-gradient(circle at top, #eef2ff 0, #f9fafb 55%);
+        }
+        .hero-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .hero-text h2 {
+            font-size: 2rem;
+        }
+        .hero-text p {
+            font-size: 1.02rem;
+        }
+        .hero-cta {
+            margin-top: 1.2rem;
+        }
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-block;
+            padding: 0.7rem 1.4rem;
+            border-radius: 999px;
+            border: none;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background-color: #f97316;
+            color: #ffffff;
+            margin-right: 0.75rem;
+        }
+        .button:hover,
+        .button:focus-visible {
+            background-color: #ea580c;
+        }
+        .button-secondary {
+            background-color: #111827;
+        }
+        .button-secondary:hover,
+        .button-secondary:focus-visible {
+            background-color: #020617;
+        }
+
+        /* Schedule */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 800px) {
+            .schedule-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+        .schedule-item {
+            padding: 1.2rem 1.3rem;
+            border-radius: 0.9rem;
+            background-color: #f3f4f6;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+        .schedule-item h3 {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Figures */
+        .figure-elevated {
+            border-radius: 1.1rem;
+            overflow: hidden;
+            background-color: #f3f4f6;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+        }
+        .figure-elevated img {
+            width: 100%;
+            display: block;
+        }
+        .figure-elevated figcaption {
+            padding: 0.75rem 1.1rem 1rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        /* Contact */
+        .contact-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .icon-envelope {
+            width: 19px;
+            height: 19px;
+            display: inline-block;
+        }
+
+        /* Footer */
+        .site-footer {
+            padding: 2rem 1.5rem 2.5rem;
+            background-color: #111827;
+            color: #e5e7eb;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .site-footer-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        .site-footer p {
+            margin: 0.3rem 0;
+        }
+        .footer-meta {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .hero {
+                padding-top: 4rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .site-header-inner {
+                align-items: center;
+            }
+            .site-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.98);
+                padding: 0.75rem 1.5rem 1rem;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                transform: translateY(-24px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+            }
+            .site-nav a {
+                padding: 0.4rem 0;
+            }
+            .site-nav-open {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+            .nav-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="site-header-inner">
+        <a href="#top" class="logo">
+            <img src="img/enso_header.png" alt="Enso symbol used as North Shore Zen logo">
+        </a>
+        <div class="title-group">
+            <h1 class="site-title">North Shore Zen</h1>
+            <p class="site-subtitle">A Soto Zen Practice Community</p>
+        </div>
+
+        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-label">Menu</span>
+        </button>
+
+        <nav id="main-nav" class="site-nav" aria-label="Primary navigation">
+            <a href="#welcome">Welcome</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#practice">Practice</a>
+            <a href="#teachers">Teachers</a>
+            <a href="#visiting">Visiting</a>
+            <a href="#support">Support</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main id="top">
+    <!-- Hero -->
+    <section id="welcome" class="section hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <h2>Welcome to North Shore Zen</h2>
+                <p>
+                    North Shore Zen is a lay Soto Zen community dedicated to the practice of zazen,
+                    the study of Buddha-dharma, and the expression of compassion in daily life.
+                    We offer regular sitting, retreats, and study opportunities for those wishing
+                    to make Zen practice part of an ordinary, contemporary life.
+                </p>
+                <p class="hero-cta">
+                    <a href="#schedule" class="button">See practice schedule</a>
+                    <a href="#visiting" class="button button-secondary">How to visit</a>
+                </p>
+            </div>
+            <figure class="hero-image">
+                <img src="img/bells.png" alt="Meditation bowls on colourful cushions">
+            </figure>
+        </div>
+    </section>
+
+    <!-- Practice Hall / Manjushri -->
+    <section id="practice" class="section section-alt">
+        <div class="section-inner two-column">
+            <div class="col">
+                <h2>Practice in the Zendo</h2>
+                <p>
+                    Our zendo is a dedicated meditation hall designed for quiet, stable sitting.
+                    Periods of zazen are interwoven with kinhin (walking meditation), service,
+                    and opportunities for interview with a teacher when available.
+                    The physical form of practice supports the cultivation of stillness,
+                    clarity, and compassionate action.
+                </p>
+                <p>
+                    Both newcomers and experienced practitioners are welcome. Orientation is
+                    offered on a regular basis so that new participants can enter the schedule
+                    safely and with clear instruction.
+                </p>
+            </div>
+            <figure class="col figure-elevated">
+                <img src="img/photo_manjushri-in-zendo.png"
+                     alt="Bronze Manjushri statue with incense bowl in the meditation hall">
+                <figcaption>
+                    Manjushri, bodhisattva of wisdom, in the North Shore Zen meditation hall.
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule" class="section">
+        <div class="section-inner">
+            <h2>Weekly Schedule</h2>
+            <p>
+                The schedule below indicates our regular weekly practice times.
+                Please confirm special events and holiday changes via the newsletter
+                or by contacting us directly.
+            </p>
+
+            <div class="schedule-grid">
+                <div class="schedule-item">
+                    <h3>Morning Zazen</h3>
+                    <p>Tuesday &amp; Thursday · 6:30 – 7:30 a.m.</p>
+                    <p>Two periods of zazen with kinhin.</p>
+                </div>
+                <div class="schedule-item">
+                    <h3>Evening Zazen</h3>
+                    <p>Monday &amp; Wednesday · 7:30 – 9:00 p.m.</p>
+                    <p>Zazen, service, and occasional dharma talk.</p>
+                </div>
+                <div class="schedule-item">
+                    <h3>Saturday Practice</h3>
+                    <p>Most Saturdays · 9:00 a.m. – 12:00 p.m.</p>
+                    <p>Extended morning of sitting and walking meditation.</p>
+                </div>
+                <div class="schedule-item">
+                    <h3>Retreats &amp; Sesshin</h3>
+                    <p>Weekend and multi-day retreats throughout the year.</p>
+                    <p>See announcements or join our mailing list for dates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teachers -->
+    <section id="teachers" class="section section-alt">
+        <div class="section-inner two-column">
+            <div class="col">
+                <h2>Teachers and Lineage</h2>
+                <p>
+                    North Shore Zen practises in the tradition of Soto Zen, in the lineage
+                    of Dōgen Zenji and Keizan Zenji. Our teaching is grounded in the classical
+                    forms of the Zen monastic tradition and adapted for lay life on the North Shore.
+                </p>
+                <p>
+                    The community is guided by teachers and senior students who offer formal
+                    teaching, dokusan or interview when in residence, and support for individual
+                    practice questions. We maintain ongoing relationships with our wider Zen
+                    lineage and sister communities.
+                </p>
+            </div>
+            <div class="col">
+                <h3>Our Approach</h3>
+                <p>
+                    We emphasise consistent sitting, ethical conduct, and the integration of
+                    practice with family, work, and community life. Study of foundational Zen
+                    texts, chanting service, and ritual are used not as ornament but as
+                    practical containers for sustained attention and compassion.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visiting -->
+    <section id="visiting" class="section">
+        <div class="section-inner two-column">
+            <div class="col">
+                <h2>Visiting for the First Time</h2>
+                <p>
+                    Newcomers are welcome. We ask that first-time visitors contact us in advance
+                    so that we can arrange a brief orientation. Orientation includes instruction
+                    in posture, zendo forms, and how to participate in chanting and bowing if
+                    you wish to do so.
+                </p>
+                <p>
+                    Please wear modest, comfortable clothing in subdued colours. Arrive at least
+                    ten minutes before the first period of zazen so you have time to settle and
+                    find a seat. Chairs are available for those who do not sit on cushions.
+                </p>
+            </div>
+            <div class="col">
+                <h3>Accessibility</h3>
+                <p>
+                    We strive to make practice accessible. If you have mobility, sensory,
+                    or health considerations, please let us know in advance so that we can
+                    adjust seating, entry, or instruction. Quiet arrival and departure during
+                    scheduled breaks can usually be accommodated.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support / Donations -->
+    <section id="support" class="section section-alt">
+        <div class="section-inner two-column">
+            <div class="col">
+                <h2>Supporting the Sangha</h2>
+                <p>
+                    North Shore Zen is supported by the generosity of members and friends.
+                    Contributions sustain the zendo space, teacher visits, online offerings,
+                    and scholarships for retreats. Regular monthly donations, even in modest
+                    amounts, help us maintain a stable practice environment.
+                </p>
+                <p>
+                    If you wish to support the sangha, you may give in person at the zendo
+                    or via electronic donation. Details can be obtained by contacting us directly.
+                </p>
+            </div>
+            <div class="col">
+                <h3>Membership</h3>
+                <p>
+                    Membership is open to those who regard North Shore Zen as a primary place
+                    of practice and wish to participate in its ongoing care. Members are invited
+                    to take part in work periods, governance, and the shared responsibility for
+                    keeping the doors of the zendo open.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+        <div class="section-inner two-column">
+            <div class="col">
+                <h2>Contact and Location</h2>
+                <p>
+                    For directions, orientation, or questions about the schedule, please email us.
+                    We will respond as promptly as possible between periods of formal practice.
+                </p>
+                <p class="contact-line">
+                    <img src="img/icon_envelope.png"
+                         alt=""
+                         class="icon-envelope">
+                    <a href="mailto:info@northshorezen.org">info@northshorezen.org</a>
+                </p>
+                <p class="muted">
+                    Physical address and detailed directions can be included here.
+                </p>
+            </div>
+            <div class="col">
+                <h3>Mailing List</h3>
+                <p>
+                    To receive notices about schedule changes, retreats, and special events,
+                    join our mailing list by sending a brief email with the subject line
+                    “Newsletter”. An online subscription form can be added here if you
+                    integrate a mailing service.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <p>&copy; <span id="year"></span> North Shore Zen. All rights reserved.</p>
+        <p class="footer-meta">
+            Practice in the Soto Zen tradition on the North Shore.
+        </p>
+    </div>
+</footer>
+
+<!-- Inline JS: small helpers -->
+<script>
+    // Simple nav toggle for small screens
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('main-nav');
+
+    if (navToggle && nav) {
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', String(!expanded));
+            nav.classList.toggle('site-nav-open');
+        });
+    }
+
+    // Set current year in footer
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+</script>
+
+</body>
+</html>
